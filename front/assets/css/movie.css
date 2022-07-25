@@ -1,0 +1,213 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    font-family: Heebo, arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 1.5rem 0 0 1.5rem;
+}
+
+.card {
+    border-top: solid 1px lightgray;
+    padding: 15px;
+    margin: 18px;
+    display: flex;
+    flex-direction: row;
+}
+
+.card-img {
+    margin-right: 16px;
+    height: 180px;
+}
+
+.card-img img {
+    width: auto;
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.card-subtitle {
+    color: rgba(9, 10, 11, 0.5);
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.card-movie {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 72px;
+    overflow-x: scroll;
+    width: 80vw;
+    height: fit-content;
+    overflow-y: clip;
+    padding: 5px;
+}
+
+.card-subcard {
+    background-color: #fff;
+    width: 157px;
+    height: 100%;
+    border-radius: 6px;
+    margin: 4px 8px 4px 0;
+    display: flex;
+    cursor: pointer;
+    transition: box-shadow 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.card-subcard:hover {
+    box-shadow: 0 0 16px #00000029;
+}
+
+.subcard-body {
+    padding: 13px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-around;
+}

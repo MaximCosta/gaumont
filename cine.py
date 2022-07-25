@@ -9,21 +9,70 @@ import re
 
 
 @define
-class ShowMovie:
+class All_movie:
     base: str = field(default="www.cinemaspathegaumont.com", init=False)
-    cinema: str = field(default="cinema-gaumont-montpellier-multiplexe")
+    path: str = field(default="api/shows", init=False)
     lang: str = field(default="fr", init=False)
+    shows: dict = field(default=dict(), init=False)
+    last_request: datetime.datetime = field(default=0, init=False)
+    max_cache_duration: int = field(default=3600, init=False)
 
-    def get_movie_list(self) -> list:
+    def get(self) -> dict:
+        if len(self.shows) and (datetime.datetime.now().timestamp() - self.last_request) > self.max_cache_duration:
+            return self.shows
         conn: HTTPSConnection = HTTPSConnection(self.base)
-        conn.request("GET", self.url, "", {"Content-Type": "application/json"})
+        conn.request("GET", f"/{self.path}?lang={self.lang}", headers={"Accept": "application/json"})
         response: HTTPResponse = conn.getresponse()
         data: bytes = response.read()
+        self.last_request = datetime.datetime.now().timestamp()
         return json.loads(data.decode("utf-8"))["shows"]
 
     @property
     def url(self) -> str:
+        return f"{self.path}?language={self.lang}"
+
+
+@define
+class ShowMovie:
+    base: str = field(default="www.cinemaspathegaumont.com", init=False)
+    cinema: str = field(default="cinema-gaumont-montpellier-multiplexe")
+    lang: str = field(default="fr", init=False)
+    movie: str = field(default="", init=False)
+
+    cache: dict = field(default=dict(), init=False)
+    max_cache_duration: int = field(default=3600, init=False)
+
+    def movie_change(self, movie: str = movie, cinema: str = cinema) -> None:
+        self.movie = movie
+        self.cinema = cinema
+
+    def get_movie_list(self) -> list:
+        if (self.cinema in self.cache) and (datetime.datetime.now().timestamp() - self.cache[self.cinema]["last_request"]) < self.max_cache_duration:
+            return self.cache[self.cinema]["movies"]
+        conn: HTTPSConnection = HTTPSConnection(self.base)
+        conn.request("GET", self.url_base, "", headers={"Accept": "application/json"})
+        response: HTTPResponse = conn.getresponse()
+        data: bytes = response.read()
+        self.cache[self.cinema] = {"last_request": datetime.datetime.now().timestamp(), "movies": json.loads(data.decode("utf-8"))["shows"]}
+        return json.loads(data.decode("utf-8"))["shows"]
+
+    def get_movie_showtimes(self):
+        if (f"{self.cinema}_{self.movie}" in self.cache) and (datetime.datetime.now().timestamp() - self.cache[f"{self.cinema}_{self.movie}"]["last_request"]) < self.max_cache_duration:
+            return self.cache[f"{self.cinema}_{self.movie}"]["showtimes"]
+        conn: HTTPSConnection = HTTPSConnection(self.base)
+        conn.request("GET", self.url_showtimes, "", headers={"Accept": "application/json"})
+        response: HTTPResponse = conn.getresponse()
+        data: bytes = response.read()
+        self.cache[f"{self.cinema}_{self.movie}"] = {"last_request": datetime.datetime.now().timestamp(), "showtimes": json.loads(data.decode("utf-8"))}
+        return json.loads(data.decode("utf-8"))
+
+    @property
+    def url_base(self) -> str:
         return f"/api/cinema/{self.cinema}/shows?language={self.lang}"
+
+    @property
+    def url_showtimes(self) -> str:
+        return f"/api/show/{self.movie}/showtimes/{self.cinema}?language={self.lang}"
 
 
 @define
