@@ -2,11 +2,8 @@
     const urlParams = new URLSearchParams(window.location.search);
     const id_cine = urlParams.get("id_cine");
     const id_movie = urlParams.get("id_movie");
-
     if (!id_cine || !id_movie) return;
-
-    let seats = await fetch(`http://127.0.0.1:5000/${id_cine}/${id_movie}`);
-    seats = await seats.json();
+    let seats = await (await fetch(`http://127.0.0.1:5000/${id_cine}/${id_movie}`)).json();
     let [y, x] = [seats.rowCount, seats.colCount];
     let seatsType = {
         DIS: {
@@ -72,10 +69,14 @@
             seat.setAttribute("data-col", j);
             seat.setAttribute("data-status", seatsMatrix[i][j].status);
             seat.setAttribute("data-type", seatsMatrix[i][j].seatType);
-            seat.innerHTML = `<svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 56 56"><use href="seats.svg#{{class}}"></use></svg>`;
-            seat.innerHTML = seat.innerHTML.replace("{{class}}", getSeatType(seatsMatrix[i][j].seatType, seatsMatrix[i][j].seatSide, seatsMatrix[i][j].status));
+            seat.innerHTML = `<svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 56 56"><use href="/front/assets/svg/seats.svg#${getSeatType(
+                seatsMatrix[i][j].seatType,
+                seatsMatrix[i][j].seatSide,
+                seatsMatrix[i][j].status
+            )}"></use></svg>`;
             row.appendChild(seat);
         }
         seatsTbody.appendChild(row);
     }
+    document.querySelector(".loading").classList.add("finished");
 })();

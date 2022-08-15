@@ -25,6 +25,7 @@ class All_movie:
         response: HTTPResponse = conn.getresponse()
         data: bytes = response.read()
         self.last_request = datetime.datetime.now().timestamp()
+        self.shows = json.loads(data.decode("utf-8"))["shows"]
         return json.loads(data.decode("utf-8"))["shows"]
 
     @property
@@ -141,7 +142,7 @@ class Cine:
         response: HTTPResponse = conn.getresponse()
         data: dict = json.loads(response.read().decode("utf-8"))
         self.maps = data["maps"][0]
-        return data["maps"][0]["seats"]
+        return data["maps"][0]
 
     def get_token(self) -> str:
         print("Getting token...")

@@ -66,13 +66,20 @@ def index():
     return Response(content, mimetype="text/html")
 
 
+@app.route("/lock")
+def lock():
+    content: str = get_file("./front/lock.html")
+    return Response(content, mimetype="text/html")
+
+
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def get_resource(path):  # pragma: no cover
-    mimetypes = {
+    mimetypes: dict = {
         ".css": "text/css",
         ".html": "text/html",
         ".js": "application/javascript",
+        ".svg": "image/svg+xml",
     }
     complete_path = os.path.join(root_dir(), path)
     ext = os.path.splitext(path)[1]
