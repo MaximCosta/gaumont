@@ -81,10 +81,10 @@ def get_resource(path):  # pragma: no cover
         ".js": "application/javascript",
         ".svg": "image/svg+xml",
     }
-    complete_path = os.path.join(root_dir(), path)
+    complete_path: str = os.path.join(root_dir(), path)
     ext = os.path.splitext(path)[1]
-    mimetype = mimetypes.get(ext, "text/html")
-    content = get_file(complete_path)
+    mimetype: str = mimetypes.get(ext, "text/html")
+    content: str = get_file(complete_path)
     return Response(content, mimetype=mimetype)
 
 
