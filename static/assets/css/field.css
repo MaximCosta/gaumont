@@ -1,0 +1,121 @@
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-input {
+    width: 20rem;
+    height: 2rem;
+    padding: 0 1rem;
+    border-radius: 2rem;
+    border: none;
+    transition: transform 0.1s ease-in-out;
+    border: 1px solid #ccc;
+    margin: 0.5rem 0;
+}
+
+::placeholder {
+    color: #a1a1a1;
+}
+
+/* hide the placeholder text on focus */
+:focus::placeholder {
+    text-indent: -999px;
+}
+
+.search-input:focus {
+    outline: none;
+    transform: scale(1.1);
+    transition: all 0.1s ease-in-out;
+}
+
+.search-input-icon {
+    position: absolute;
+    right: 0.8rem;
+    top: 1rem;
+    color: #a1a1a1;
+    transition: all 0.1s ease-in-out;
+}
+
+.search-container {
+    margin: 0 16px 12px 16px;
+}
+
+.cities-shows {
+    overflow-y: auto;
+    height: 400px;
+}
+
+.cur-city {
+    text-transform: capitalize;
+}
+
+/* reduce all sub element to height 0*/
+.city * {
+    height: 0;
+}
+
+.city.show * {
+    height: auto;
+}
+
+.city {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    height: 0;
+    opacity: 0;
+    transition: all 0.4s ease-out;
+}
+
+.city h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(55, 53, 47);
+}
+
+.city.show {
+    margin: 15px 15px;
+    height: auto;
+    opacity: 1;
+}
+
+.city-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.city-cinema {
+    text-transform: capitalize;
+    height: 0 !important;
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    margin: 0;
+}
+
+.city-cinema.show {
+    height: auto !important;
+    opacity: 1;
+    margin: 10px 0 0 0;
+}
+
+.city-cinema.show .cinema-name {
+    padding: 16px 0 16px 12px;
+    display: flex;
+    place-content: space-between;
+}
+
+/* rotate btn 90deg */
+.city-cbtn i {
+    transition: all 0.4s ease-out;
+}
+
+.city-cbtn i.down {
+    transform: rotate(90deg);
+}
+
+/* pointer */
+.po {
+    cursor: pointer;
+}

@@ -11,26 +11,33 @@ import re
 @define
 class All_movie:
     base: str = field(default="www.cinemaspathegaumont.com", init=False)
-    path: str = field(default="api/shows", init=False)
     lang: str = field(default="fr", init=False)
     shows: dict = field(default=dict(), init=False)
-    last_request: datetime.datetime = field(default=0, init=False)
+    cities: list = field(default=list(), init=False)
+    last_request: dict = field(default={"shows": 0, "cities": 0}, init=False)
     max_cache_duration: int = field(default=3600, init=False)
 
     def get(self) -> dict:
-        if len(self.shows) and (datetime.datetime.now().timestamp() - self.last_request) > self.max_cache_duration:
+        if len(self.shows) and (datetime.datetime.now().timestamp() - self.last_request["shows"]) > self.max_cache_duration:
             return self.shows
         conn: HTTPSConnection = HTTPSConnection(self.base)
-        conn.request("GET", f"/{self.path}?lang={self.lang}", headers={"Accept": "application/json"})
+        conn.request("GET", f"/api/shows?lang={self.lang}", headers={"Accept": "application/json"})
         response: HTTPResponse = conn.getresponse()
         data: bytes = response.read()
-        self.last_request = datetime.datetime.now().timestamp()
+        self.last_request["shows"] = datetime.datetime.now().timestamp()
         self.shows = json.loads(data.decode("utf-8"))["shows"]
-        return json.loads(data.decode("utf-8"))["shows"]
+        return self.shows
 
-    @property
-    def url(self) -> str:
-        return f"{self.path}?language={self.lang}"
+    def get_cities(self) -> list:
+        if len(self.cities) and (datetime.datetime.now().timestamp() - self.last_request["cities"]) > self.max_cache_duration:
+            return self.cities
+        conn: HTTPSConnection = HTTPSConnection(self.base)
+        conn.request("GET", f"/api/cities?lang={self.lang}", headers={"Accept": "application/json"})
+        response: HTTPResponse = conn.getresponse()
+        data: bytes = response.read()
+        self.last_request["cities"] = datetime.datetime.now().timestamp()
+        self.cities = json.loads(data.decode("utf-8"))
+        return self.cities
 
 
 @define
@@ -55,7 +62,8 @@ class ShowMovie:
         response: HTTPResponse = conn.getresponse()
         data: bytes = response.read()
         self.cache[self.cinema] = {"last_request": datetime.datetime.now().timestamp(), "movies": json.loads(data.decode("utf-8"))["shows"]}
-        return json.loads(data.decode("utf-8"))["shows"]
+        print(len(self.cache[self.cinema]["movies"]))
+        return self.cache[self.cinema]["movies"]
 
     def get_movie_showtimes(self):
         if (f"{self.cinema}_{self.movie}" in self.cache) and (datetime.datetime.now().timestamp() - self.cache[f"{self.cinema}_{self.movie}"]["last_request"]) < self.max_cache_duration:
@@ -116,10 +124,11 @@ class Cine:
     __seats: list = field(init=False)
     maps: dict = field(init=False, default=None)
 
-    def change_movie(self, id_cine: str, id_movie: str, callback: callable = lambda x: None) -> None:
+    def change_movie(self, id_cine: str, id_movie: str, callback: callable = None) -> None:
         self.id_cine = id_cine
         self.id_movie = id_movie
-        callback()
+        if callback:
+            callback()
 
     def lock_seats(self) -> None:
         print("Locking seats...")
@@ -128,10 +137,10 @@ class Cine:
                 if seat["status"] == 0:
                     self.book_seat(seat)
 
-    def book_seat(self, seat: str) -> None:
+    def book_seat(self, seat: dict) -> None:
         conn: HTTPSConnection = HTTPSConnection(self.base)
         headers: dict = {"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"}
-        payload: dict = {"seats": [seat], "activeShowing": self.i2}
+        payload: dict = {"seats": [seat], "activeShowing": self.id_movie}
         conn.request("POST", self.url_book, json.dumps(payload), headers)
         time.sleep(0.1)
 

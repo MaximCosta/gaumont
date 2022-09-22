@@ -147,6 +147,40 @@ h1 {
     margin: 18px;
     display: flex;
     flex-direction: row;
+
+    /* animation 1
+    transition: all 0.4s ease-out;
+    opacity: 0;
+    */
+
+    /* animation 2
+    opacity: 0;
+    transform: rotateY(-90deg);
+    transition: all 0.5s cubic-bezier(.36,-0.64,.34,1.76)
+    */
+
+    /* animation 3 */
+    perspective: 100px;
+    opacity: 0;
+    transform: rotateX(-90deg);
+    transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+}
+
+.card.show {
+    /* animation 1
+    opacity: 1;
+    */
+
+    /* animation 2
+    opacity: 1;
+    transform: none;
+    transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+    */
+
+    /* animation 3 */
+    opacity: 1;
+    transform: none;
+    transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
 }
 
 .card-img {
@@ -175,6 +209,7 @@ h1 {
     color: rgba(9, 10, 11, 0.5);
     font-size: 14px;
     line-height: 16px;
+    width: max-content;
 }
 
 .card-movie {
@@ -182,7 +217,7 @@ h1 {
     flex-direction: row;
     align-items: center;
     height: 72px;
-    overflow-x: scroll;
+    overflow-x: auto;
     width: 80vw;
     height: fit-content;
     overflow-y: clip;
@@ -235,6 +270,23 @@ h1 {
     visibility: hidden;
     transform: scale(1.1);
     transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+    z-index: 3;
+}
+.modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.modal-title {
+    color: rgb(55, 53, 47);
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: 24px;
+    cursor: text;
+}
+.modal-body {
+    padding: 0 24px;
 }
 .modal-content {
     position: absolute;
@@ -246,7 +298,6 @@ h1 {
     border-radius: 0.5rem;
 }
 .close-button {
-    float: right;
     width: 1.5rem;
     line-height: 1.5rem;
     text-align: center;
@@ -262,4 +313,12 @@ h1 {
     visibility: visible;
     transform: scale(1);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-content {
+    max-height: 60%;
+}
+
+.no-scroll {
+    overflow: hidden;
 }
