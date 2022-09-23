@@ -58,8 +58,8 @@
             seatsMatrix[seat.rowIndex][seat.seatIndex] = seat;
         });
     });
-    
-    document.querySelector(".loading").remove();
+
+    document.querySelector(".loading").style.display = "none";
 
     let seatsTbody = document.getElementById("cine");
     for (let i = 0; i < y; i++) {
@@ -76,15 +76,25 @@
             seat.setAttribute("data-seatName", seatsMatrix[i][j].seatName);
             seat.setAttribute("data-section", seatsMatrix[i][j].section);
 
-            seat.innerHTML = `<svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 56 56"><use href="/static/assets/svg/seats.svg#${getSeatType(
-                seatsMatrix[i][j].seatType,
-                seatsMatrix[i][j].seatSide,
-                seatsMatrix[i][j].status
-            )}"></use></svg>`;
+            seat.innerHTML = `<svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 56 56"><use href="/static/assets/svg/seats.svg#${getSeatType(seatsMatrix[i][j].seatType, seatsMatrix[i][j].seatSide, seatsMatrix[i][j].status)}"></use></svg>`;
             row.appendChild(seat);
         }
         seatsTbody.appendChild(row);
     }
+
+    document.querySelector(".loading").remove();
+
+    let elRect = document.querySelector("#cine").getBoundingClientRect();
+    window.parent.postMessage(
+        {
+            type: "resize-iframe",
+            payload: {
+                width: elRect.width,
+                height: elRect.height,
+            },
+        },
+        "*"
+    );
 
     document.addEventListener("click", (e) => {
         // check if target click is a td or a child of td
@@ -103,11 +113,7 @@
 
             if (payload.status == 0) {
                 seat.setAttribute("data-status", 5);
-                seat.innerHTML = `<svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 56 56"><use href="/static/assets/svg/seats.svg#${getSeatType(
-                    payload.seatType,
-                    payload.seatSide,
-                    5
-                )}"></use></svg>`;
+                seat.innerHTML = `<svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 56 56"><use href="/static/assets/svg/seats.svg#${getSeatType(payload.seatType, payload.seatSide, 5)}"></use></svg>`;
 
                 var myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");

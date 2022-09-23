@@ -136,3 +136,8 @@ table {
     margin: 0;
     overflow: hidden;
 }
+
+.cine_container {
+    display: flex;
+    justify-content: center;
+}

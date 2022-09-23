@@ -57,16 +57,18 @@ async function citiesShows(cine) {
     }
 }
 
-async function iframeLoaded() {
-    let iFrameID = document.getElementById("idIframe");
-    let interval = setInterval(() => {
-        if (!iFrameID.contentWindow.document.body.querySelector(".loading")) {
-            clearInterval(interval);
-            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-            iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
+window.addEventListener(
+    "message",
+    (ev) => {
+        let iFrameID = document.getElementById("idIframe");
+        if (ev.data.type && ev.data.type === "resize-iframe") {
+            iFrameID.style.width = ev.data.payload.width + "px";
+            iFrameID.style.height = ev.data.payload.height + "px";
         }
-    }, 100);
-}
+    },
+    false
+);
+
 
 async function printMovie() {
     let movies_div = document.querySelector(".card-container");
@@ -99,7 +101,6 @@ async function printMovie() {
         }
         if (card.querySelector(".card-movie").children.length > 0) {
             movies_div.appendChild(card);
-            // execute in 100ms
             setTimeout(() => {
                 card.classList.add("show");
             }, 100 * (idx + 1));
