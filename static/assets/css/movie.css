@@ -297,7 +297,12 @@ h1 {
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
 }
-.close-button {
+.btn-group {
+    display: flex;
+}
+.close-button,
+.reload-button {
+    margin: 0 4px;
     width: 1.5rem;
     line-height: 1.5rem;
     text-align: center;

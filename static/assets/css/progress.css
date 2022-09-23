@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+/* reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* subtle color palette */
+    --black-1a: hsl(0, 0%, 0%, 0.3);
+    /* basic color palette */
+    --white-1: hsl(0, 0%, 100%);
+    --black-1: hsl(0, 0%, 0%);
+    /* fonts */
+    --ft-fy-fallback-1: sans-serif;
+    --ft-fy-1: "Poppins", var(--ft-fy-fallback-1);
+    --ft-se-400: 1.05rem;
+    /* spaces */
+    --space-400: 2em;
+}
+
+/* components */
+.progress {
+    color: var(--black-1);
+    display: grid;
+    font-family: var(--ft-fy-1);
+    font-size: var(--ft-se-400);
+    place-items: center;
+    margin: 24px 0;
+}
+
+.progress-bar {
+    width: calc(100% - var(--space-400));
+    border: 1px solid var(--black-1a);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    height: 27px;
+}
+.progress-bar__text {
+    text-align: center;
+}
+.progress-bar__status-bar {
+    --status: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10%;
+    height: 100%;
+    z-index: -300;
+    background-color: hsl(var(--status), 50%, 50%);
+}

@@ -1,0 +1,44 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    margin: calc(50vh - 42.5px) 0;
+}
+
+/* Spinner 1 starts here */
+.spinner1 {
+    align-items: center;
+    border: 0.3em solid transparent;
+    border-top: 0.3em solid #4db6ac;
+    border-right: 0.3em solid #4db6ac;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.spinnerMax {
+    animation: spinnerOne 3s linear infinite;
+    height: 3em;
+    width: 3em;
+}
+
+.spinnerMid {
+    animation: spinnerOne 5s linear infinite;
+    height: 2.4em;
+    width: 2.4em;
+}
+
+.spinnerMin {
+    animation: spinnerOne 5s linear infinite;
+    height: 1.8em;
+    width: 1.8em;
+}
+
+@keyframes spinnerOne {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

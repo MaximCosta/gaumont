@@ -1,107 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Perfect View</title>
-        <link rel="stylesheet" href="/static/assets/css/movie.css" type="text/css" />
-        <link rel="stylesheet" href="/static/assets/css/nyan.css" type="text/css" />
-        <link rel="stylesheet" href="/static/assets/css/search.css" type="text/css" />
-        <link rel="stylesheet" href="/static/assets/css/field.css" type="text/css" />
-        <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" type="image/x-icon" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <template class="template_card">
-            <div class="card-img"><img src="" alt="" srcset="" /></div>
-            <div class="card-body">
-                <div class="card-info">
-                    <div class="card-title"></div>
-                    <div class="card-subtitle"></div>
-                </div>
-                <div class="card-movie"></div>
-            </div>
-        </template>
-        <template class="template_subcard">
-            <div class="subcard-body">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfect View</title>
+    <link rel="stylesheet" href="/static/assets/css/movie.css" type="text/css" />
+    <link rel="stylesheet" href="/static/assets/css/nyan.css" type="text/css" />
+    <link rel="stylesheet" href="/static/assets/css/search.css" type="text/css" />
+    <link rel="stylesheet" href="/static/assets/css/field.css" type="text/css" />
+    <link rel="stylesheet" href="/static/assets/css/progress.css" type="text/css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <template class="template_card">
+        <div class="card-img"><img src="" alt="" srcset="" /></div>
+        <div class="card-body">
+            <div class="card-info">
                 <div class="card-title"></div>
-                <div class="card-subtitle">...</div>
+                <div class="card-subtitle"></div>
             </div>
-        </template>
-    </head>
-
-    <body>
-        <div class="head">
-            <div><img src="/static/assets/img/seats-min.jpg" alt="move" class="img-head" /></div>
-            <div><img src="https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f4fd-fe0f.svg" alt="icon" class="icon-head" /></div>
+            <div class="card-movie"></div>
         </div>
-        <div class="main">
-            <div class="shake"><span class="t1">Perfect View</span></div>
-            <div class="desc">
-                <span>
-                    Perfect view c'est ???, c'est le moyen de regarder tranquillement un film sans que personne ne vous gêne. Sur ce site, vous allez pouvoir
-                    bloquer des places grâce à notre sélecteur ou encore grâce à des tampons de différentes formes pour aller encore plus vite. Il est aussi
-                    possible de jouer au Tic-Tac-Toe. C'est un fou, mais c'est drôle.
-                </span>
-            </div>
-            <div class="search-zone">
-                <div class="search-where">
-                    <div class="search">
-                        <div class="icon-search">
-                            <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" alt="google icon" class="g-icon" />
-                            <input class="search-bar" type="text" placeholder="Enter Search.." />
-                        </div>
-                        <button><i class="fa fa-search" aria-hidden="true"></i></button>
+    </template>
+    <template class="template_subcard">
+        <div class="subcard-body">
+            <div class="card-title"></div>
+            <div class="card-subtitle">...</div>
+        </div>
+    </template>
+</head>
+
+<body>
+    <div class="head">
+        <div><img src="/static/assets/img/seats-min.jpg" alt="move" class="img-head" /></div>
+        <div><img src="https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f4fd-fe0f.svg" alt="icon"
+                class="icon-head" /></div>
+    </div>
+    <div class="main">
+        <div class="shake"><span class="t1">Perfect View</span></div>
+        <div class="desc">
+            <span>
+                Perfect view c'est ???, c'est le moyen de regarder tranquillement un film sans que personne ne vous
+                gêne. Sur ce site, vous allez pouvoir
+                bloquer des places grâce à notre sélecteur ou encore grâce à des tampons de différentes formes pour
+                aller encore plus vite. Il est aussi
+                possible de jouer au Tic-Tac-Toe. C'est un fou, mais c'est drôle.
+            </span>
+        </div>
+        <div class="search-zone">
+            <div class="search-where">
+                <div class="search">
+                    <div class="icon-search">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" alt="google icon"
+                            class="g-icon" />
+                        <input class="search-bar" type="text" placeholder="Enter Search.." />
                     </div>
-                    <div class="where tooltip">
-                        <div class="where-text">où ?</div>
-                        <div class="top">
-                            <p class="cur-city"></p>
-                            <i></i>
-                        </div>
+                    <button><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+                <div class="where tooltip">
+                    <div class="where-text">où ?</div>
+                    <div class="top">
+                        <p class="cur-city"></p>
+                        <i></i>
                     </div>
                 </div>
             </div>
-            <div>
-                <span class="t1">Choisir son film</span>
-                <div class="date nyan"></div>
-            </div>
-            <div class="card-container"></div>
         </div>
-        <div class="modal movie">
-            <div class="modal-content">
-                <div class="modal-head">
-                    <span class="modal-title">Locker des places</span>
-                    <span class="close-button"><i class="fa fa-xmark" aria-hidden="true"></i></span>
+        <div>
+            <span class="t1">Choisir son film</span>
+            <div class="date nyan"></div>
+            <div class="progress">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-bar__text" id="progress-bar__text">0%</div>
+                    <div class="progress-bar__status-bar" id="progress-bar__status-bar"></div>
                 </div>
-                <iframe id="idIframe" class="modal-iframe" src="" frameborder="0" onload="iframeLoaded()"></iframe>
             </div>
         </div>
-
-        <div class="modal location">
-            <div class="modal-content">
-                <div class="modal-head">
-                    <span class="modal-title">Choisir son cinéma</span>
+        <div class="card-container"></div>
+    </div>
+    <div class="modal movie">
+        <div class="modal-content">
+            <div class="modal-head">
+                <span class="modal-title">Locker des places</span>
+                <div class="btn-group">
+                    <span class="reload-button"><i class="fa-solid fa-rotate-right"></i></i></span>
                     <span class="close-button"><i class="fa-solid fa-xmark"></i></span>
                 </div>
-                <div class="modal-body">
-                    <div class="search-container">
+            </div>
+            <iframe id="idIframe" class="modal-iframe" src="" frameborder="0" onload="iframeLoaded()"></iframe>
+        </div>
+    </div>
+
+    <div class="modal location">
+        <div class="modal-content">
+            <div class="modal-head">
+                <span class="modal-title">Choisir son cinéma</span>
+                <span class="close-button"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <div class="modal-body">
+                <div class="search-container">
                     <div class="search-input-wrapper">
                         <input class="search-input" type="text" placeholder='focus here to search'>
                         <i class="search-input-icon fa fa-search"></i>
                         </input>
-                      </div>
                     </div>
-                    <div class="cities-shows"></div>
                 </div>
+                <div class="cities-shows"></div>
             </div>
         </div>
+    </div>
 
-        <script src="/static/assets/js/movie.js"></script>
-    </body>
+    <script src="/static/assets/js/movie.js"></script>
+</body>
+
 </html>

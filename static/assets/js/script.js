@@ -58,6 +58,8 @@
             seatsMatrix[seat.rowIndex][seat.seatIndex] = seat;
         });
     });
+    
+    document.querySelector(".loading").remove();
 
     let seatsTbody = document.getElementById("cine");
     for (let i = 0; i < y; i++) {
@@ -83,7 +85,6 @@
         }
         seatsTbody.appendChild(row);
     }
-    document.querySelector(".loading").classList.add("finished");
 
     document.addEventListener("click", (e) => {
         // check if target click is a td or a child of td

@@ -52,18 +52,20 @@ async function citiesShows(cine) {
         </div>
         <div class="city-cinema">
             ${city.cinemas.map((cine) => `<div class="cinema-name" data-cinema="${cine}">${cine.replace(/-/g, " ")}<i class="fa-solid fa-arrow-up-right-from-square po link-city"></i></div>`).join("")}
-        </div>
-        `;
+        </div>`;
         cities_div.appendChild(city_div);
     }
 }
 
 async function iframeLoaded() {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    if ((iFrameID = document.getElementById("idIframe"))) {
-        iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-        iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
-    }
+    let iFrameID = document.getElementById("idIframe");
+    let interval = setInterval(() => {
+        if (!iFrameID.contentWindow.document.body.querySelector(".loading")) {
+            clearInterval(interval);
+            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+            iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
+        }
+    }, 100);
 }
 
 async function printMovie() {
@@ -139,6 +141,11 @@ document.addEventListener("click", async (e) => {
         return;
     }
 
+    if ((target = hasParentClass(e.target, "reload-button"))) {
+        document.querySelector(".modal-iframe").contentWindow.location.reload();
+        return;
+    }
+
     if ((target = hasParentClass(e.target, "close-button"))) {
         document.querySelectorAll(".modal").forEach((modal) => modal.classList.remove("show-modal"));
         document.body.classList.remove("no-scroll");
@@ -172,6 +179,10 @@ document.querySelector(".search-bar").addEventListener("keyup", printMovie);
 document.querySelector(".search-input").addEventListener("keyup", printCities);
 
 (async () => {
+    // loading bar animation
+    const progressText = document.getElementById("progress-bar__text");
+    const statusBar = document.getElementById("progress-bar__status-bar");
+
     const urlParams = new URLSearchParams(window.location.search);
     const cine = urlParams.get("cine");
     if (!cine) {
@@ -205,12 +216,23 @@ document.querySelector(".search-input").addEventListener("keyup", printCities);
                     hour: data.time.split(" ")[1].split(":").slice(0, 2).join("h"),
                     date: new Date(data.time.split(" ")[0]).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" }),
                 };
-                info.dates.push(dinfo);
-                movies_day.push(removeTime(new Date(data.time.split(" ")[0])));
+                if (new Date(data.time) > new Date()) {
+                    info.dates.push(dinfo);
+                    movies_day.push(removeTime(new Date(data.time.split(" ")[0])));
+                }
             }
         }
         movies_list.push(info);
+
+        // loading bar animation
+        let progressStatus = Math.round((movies_list.length / Object.keys(movies).length) * 100);
+        progressText.textContent = progressStatus + "%";
+        statusBar.setAttribute("style", `--status: ${progressStatus}`);
+        statusBar.style.width = progressStatus + "%";
     }
+
+    // loading bar animation end
+    document.querySelector(".progress").remove();
 
     movies_day = movies_day
         .map((date) => date.getTime())
