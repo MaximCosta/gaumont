@@ -69,7 +69,6 @@ window.addEventListener(
     false
 );
 
-
 async function printMovie() {
     let movies_div = document.querySelector(".card-container");
     let selected_date = document.querySelector(".card-date.active");
@@ -198,41 +197,41 @@ document.querySelector(".search-input").addEventListener("keyup", printCities);
     let movies_list = [];
     let movies_day = [];
 
-    for (let key in movies) {
-        let movie = all_movies.find((movie) => movie.slug == key);
-        let info = {
-            showtime: await fetch(`http://127.0.0.1:5000/movies/showtimes/${cine}/${key}`).then((res) => res.json()),
-            img: movie.posterPath.md,
-            title: movie.title,
-            subtitle: `${movie.genres.join(" / ")} ${minutesToHms(movie.duration)}`,
-            body: movies[key].body,
-            dates: [],
-        };
-        for (date in info.showtime) {
-            for (let data of info.showtime[date]) {
-                let [id_cine, id_movie] = data.refCmd.split("/").at(-2).replace("V", "").split("S");
-                let dinfo = {
-                    id_cine,
-                    id_movie,
-                    hour: data.time.split(" ")[1].split(":").slice(0, 2).join("h"),
-                    date: new Date(data.time.split(" ")[0]).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" }),
-                };
-                if (new Date(data.time) > new Date()) {
-                    info.dates.push(dinfo);
-                    movies_day.push(removeTime(new Date(data.time.split(" ")[0])));
-                }
-            }
-        }
-        movies_list.push(info);
+    await Promise.all(
+        Object.keys(movies).map(
+            (key) =>
+                new Promise(async (resolve, reject) => {
+                    let movie = all_movies.find((movie) => movie.slug == key);
+                    let info = {
+                        showtime: await fetch(`http://127.0.0.1:5000/movies/showtimes/${cine}/${key}`).then((res) => res.json()),
+                        img: movie.posterPath.md,
+                        title: movie.title,
+                        subtitle: `${movie.genres.join(" / ")} ${minutesToHms(movie.duration)}`,
+                        body: movies[key].body,
+                        dates: [],
+                    };
+                    for (date in info.showtime) {
+                        for (let data of info.showtime[date]) {
+                            let [id_cine, id_movie] = data.refCmd.split("/").at(-2).replace("V", "").split("S");
+                            let dinfo = { id_cine, id_movie, hour: data.time.split(" ")[1].split(":").slice(0, 2).join("h"), date: new Date(data.time.split(" ")[0]).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" }) };
+                            if (new Date(data.time) > new Date()) {
+                                info.dates.push(dinfo);
+                                movies_day.push(removeTime(new Date(data.time.split(" ")[0])));
+                            }
+                        }
+                    }
+                    movies_list.push(info);
 
-        // loading bar animation
-        let progressStatus = Math.round((movies_list.length / Object.keys(movies).length) * 100);
-        progressText.textContent = progressStatus + "%";
-        statusBar.setAttribute("style", `--status: ${progressStatus}`);
-        statusBar.style.width = progressStatus + "%";
-    }
+                    // loading bar animation
+                    let progressStatus = Math.round((movies_list.length / Object.keys(movies).length) * 100);
+                    progressText.textContent = progressStatus + "%";
+                    statusBar.setAttribute("style", `--status: ${progressStatus}`);
+                    statusBar.style.width = progressStatus + "%";
+                    resolve();
+                })
+        )
+    );
 
-    // loading bar animation end
     document.querySelector(".progress").remove();
 
     movies_day = movies_day
