@@ -30,7 +30,7 @@ function removeTime(date = new Date()) {
 async function citiesShows(cine) {
     document.querySelector(".cur-city").innerHTML = cine.replace(/-/g, " ");
     let cities_div = document.querySelector(".cities-shows");
-    let cities = await fetch("http://127.0.0.1:5000/cities").then((res) => res.json());
+    let cities = await fetch("/cities").then((res) => res.json());
 
     let find = cities.find((city) => city.cinemas.includes(cine));
     if (!find) return (window.location.href = "/");
@@ -191,8 +191,8 @@ document.querySelector(".search-input").addEventListener("keyup", printCities);
     }
     citiesShows(cine);
 
-    let movies = await fetch(`http://127.0.0.1:5000/movies/${cine}`).then((res) => res.json());
-    let all_movies = await fetch(`http://127.0.0.1:5000/data_movies`).then((res) => res.json());
+    let movies = await fetch(`/movies/${cine}`).then((res) => res.json());
+    let all_movies = await fetch(`/data_movies`).then((res) => res.json());
 
     let movies_list = [];
     let movies_day = [];
@@ -203,7 +203,7 @@ document.querySelector(".search-input").addEventListener("keyup", printCities);
                 new Promise(async (resolve, reject) => {
                     let movie = all_movies.find((movie) => movie.slug == key);
                     let info = {
-                        showtime: await fetch(`http://127.0.0.1:5000/movies/showtimes/${cine}/${key}`).then((res) => res.json()),
+                        showtime: await fetch(`/movies/showtimes/${cine}/${key}`).then((res) => res.json()),
                         img: movie.posterPath.md,
                         title: movie.title,
                         subtitle: `${movie.genres.join(" / ")} ${minutesToHms(movie.duration)}`,

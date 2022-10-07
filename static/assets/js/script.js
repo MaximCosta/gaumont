@@ -3,7 +3,7 @@
     const id_cine = urlParams.get("id_cine");
     const id_movie = urlParams.get("id_movie");
     if (!id_cine || !id_movie) return;
-    let seats = await (await fetch(`http://127.0.0.1:5000/${id_cine}/${id_movie}`)).json();
+    let seats = await (await fetch(`/${id_cine}/${id_movie}`)).json();
     let [y, x] = [seats.rowCount, seats.colCount];
     let seatsType = {
         DIS: {
@@ -134,7 +134,7 @@
                     body: urlencoded,
                 };
 
-                fetch(`http://127.0.0.1:5000/lock/${id_cine}/${id_movie}`, requestOptions);
+                fetch(`/lock/${id_cine}/${id_movie}`, requestOptions);
             }
         }
     });
