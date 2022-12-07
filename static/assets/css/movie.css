@@ -320,10 +320,6 @@ h1 {
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
-.modal-content {
-    max-height: 60%;
-}
-
 .no-scroll {
     overflow: hidden;
 }

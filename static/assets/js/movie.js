@@ -202,9 +202,10 @@ document.querySelector(".search-input").addEventListener("keyup", printCities);
             (key) =>
                 new Promise(async (resolve, reject) => {
                     let movie = all_movies.find((movie) => movie.slug == key);
+                    console.log(movie);
                     let info = {
                         showtime: await fetch(`/movies/showtimes/${cine}/${key}`).then((res) => res.json()),
-                        img: movie.posterPath.md,
+                        img: movie.posterPath?.md || movie.backgroundPath?.md,
                         title: movie.title,
                         subtitle: `${movie.genres.join(" / ")} ${minutesToHms(movie.duration)}`,
                         body: movies[key].body,
